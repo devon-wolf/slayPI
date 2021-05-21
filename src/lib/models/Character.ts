@@ -53,7 +53,7 @@ module.exports = class Character {
 	}
 
 	static async getByID(id : string) {
-		const { rows } = await pool.query('SELECT * FROM characters where id=$1', [id]);
+		const { rows } = await pool.query('SELECT * FROM characters WHERE id=$1', [id]);
 		return new Character(rows[0]);
 	}
 
@@ -76,6 +76,11 @@ module.exports = class Character {
 			id
 		]);
 
+		return new Character(rows[0]);
+	}
+
+	static async delete(id : string) {
+		const { rows } = await pool.query('DELETE FROM characters WHERE id=$1 RETURNING *', [id]);
 		return new Character(rows[0]);
 	}
 }

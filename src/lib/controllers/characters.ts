@@ -31,3 +31,9 @@ module.exports = Router ()
 			.edit(req.params.id, req.body)
 			.then((character : CharClass) => res.send(character));
 	})
+
+	.delete('/:id', (req : Request, res : Response, next : NextFunction) => {
+		Character
+			.delete(req.params.id)
+			.then((character : CharClass) => res.send(character));
+	});
