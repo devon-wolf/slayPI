@@ -55,4 +55,26 @@ describe('buffy-API routes', () => {
         groupAffiliation: 'Scooby Gang'
       }));
   });
+
+  it('gets all characters', () => {
+    return request(app)
+      .get('/api/v1/characters')
+      .then(response => expect(response.body).toEqual([{
+        id: '1',
+        name: 'Anya Jenkins',
+        image: 'https://static.wikia.nocookie.net/buffy/images/8/84/B6_Anya_02.jpg/revision/latest?cb=20170717214459',
+        creatureType: 'human',
+        specialRole: 'vengeance demon (former)',
+        groupAffiliation: 'Scooby Gang'
+      },
+      {
+        id: '2',
+        name: 'Alexander Harris',
+        image: 'https://static.wikia.nocookie.net/buffy/images/6/6a/S6_058_Xander.jpg/revision/latest?cb=20190430164507',
+        creatureType: 'human',
+        specialRole: 'butt monkey',
+        groupAffiliation: 'Scooby Gang'
+      }
+      ]));
+  });
 });
