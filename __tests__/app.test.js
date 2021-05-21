@@ -3,9 +3,35 @@ const setup = require('../dist/data/setup');
 const request = require('supertest');
 const app = require('../dist/lib/app');
 
+const anya = {
+  name: 'Anya Jenkins',
+  image: 'https://static.wikia.nocookie.net/buffy/images/8/84/B6_Anya_02.jpg/revision/latest?cb=20170717214459',
+  creature_type: 'human',
+  special_role: 'vengeance demon (former)',
+  group_affiliation: 'Scooby Gang'
+};
+
+const xander = {
+  name: 'Alexander Harris',
+  image: 'https://static.wikia.nocookie.net/buffy/images/6/6a/S6_058_Xander.jpg/revision/latest?cb=20190430164507',
+  creature_type: 'human',
+  special_role: 'butt monkey',
+  group_affiliation: 'Scooby Gang'
+};
+
 describe('buffy-API routes', () => {
   beforeEach(() => {
     return setup(pool);
+  });
+
+  beforeEach(async () => {
+    await request(app)
+      .post('/api/v1/characters')
+      .send(anya);
+
+    await request(app)
+      .post('/api/v1/characters')
+      .send(xander);
   });
 
   it('adds a character', () => {
@@ -21,7 +47,7 @@ describe('buffy-API routes', () => {
       .post('/api/v1/characters')
       .send(newChar)
       .then(response => expect(response.body).toEqual({
-        id: '1',
+        id: '3',
         name: 'Tara Maclay',
         image: 'https://static.wikia.nocookie.net/buffy/images/a/a3/Tara_Maclay9.jpg/revision/latest/scale-to-width-down/1000?cb=20190106065228',
         creatureType: 'human',
