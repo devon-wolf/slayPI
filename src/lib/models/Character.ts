@@ -45,4 +45,10 @@ module.exports = class Character {
 
 		return new Character(rows[0]);
 	}
+
+	static async getAll() {
+		const { rows } = await pool.query('SELECT * FROM characters');
+
+		return rows.map((row : CharRow) => new Character(row));
+	}
 }
