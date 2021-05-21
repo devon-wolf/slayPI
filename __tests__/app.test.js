@@ -110,4 +110,17 @@ describe('buffy-API routes', () => {
         groupAffiliation: 'Scooby Gang'
       }));
   });
+
+  it('deletes a character', () => {
+    return request(app)
+      .delete('/api/v1/characters/1')
+      .then(response => expect(response.body).toEqual({
+        id: '1',
+        name: 'Anya Jenkins',
+        image: 'https://static.wikia.nocookie.net/buffy/images/8/84/B6_Anya_02.jpg/revision/latest?cb=20170717214459',
+        creatureType: 'human',
+        specialRole: 'vengeance demon (former)',
+        groupAffiliation: 'Scooby Gang'
+      }));
+  });
 });
