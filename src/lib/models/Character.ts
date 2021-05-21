@@ -56,4 +56,26 @@ module.exports = class Character {
 		const { rows } = await pool.query('SELECT * FROM characters where id=$1', [id]);
 		return new Character(rows[0]);
 	}
+
+	static async edit(id : string, { name, image, creature_type, special_role, group_affiliation } : CharRequest) {
+		const { rows } = await pool.query(`
+		UPDATE characters 
+		SET name = $1,
+		image = $2,
+		creature_type = $3,
+		special_role = $4,
+		group_affiliation = $5
+		WHERE id = $6
+		RETURNING *`,
+		[
+			name,
+			image,
+			creature_type,
+			special_role,
+			group_affiliation,
+			id
+		]);
+
+		return new Character(rows[0]);
+	}
 }

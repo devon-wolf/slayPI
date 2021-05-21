@@ -25,3 +25,9 @@ module.exports = Router ()
 			.then((character : CharClass) => res.send(character))
 			.catch(next);
 	})
+
+	.put('/:id', (req : Request, res : Response, next : NextFunction) => {
+		Character
+			.edit(req.params.id, req.body)
+			.then((character : CharClass) => res.send(character));
+	})
