@@ -1,7 +1,7 @@
-const pool = require('../dist/lib/utils/pool');
-const setup = require('../dist/data/setup');
+const pool = require('../src/lib/utils/pool');
+const setup = require('../src/data/setup');
 const request = require('supertest');
-const app = require('../dist/lib/app');
+const app = require('../src/lib/app');
 
 const anya = {
   name: 'Anya Jenkins',

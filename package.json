@@ -7,12 +7,14 @@
     "test": "jest --verbose --runInBand --testLocationInResults --setupFiles dotenv/config",
     "test:watch": "npm run test -- --watch",
     "start": "tsc && node -r dotenv/config dist/server.js",
-    "start:watch": "nodemon -r dotenv/config dist/server.js",
-    "setup-db": "node -r dotenv/config setup-db.js",
-    "setup-heroku": "heroku run npm run setup-db"
+    "start:watch": "tsc && nodemon -r dotenv/config dist/server.js",
+    "setup-db": "node -r dotenv/config src/setup-db.js",
+    "setup-heroku": "heroku run npm run setup-db",
+    "build": "tsc"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "preset": "ts-jest"
   },
   "keywords": [],
   "author": "",
@@ -28,6 +30,7 @@
     "nodemon": "^2.0.7",
     "prettier": "^2.3.0",
     "supertest": "^6.1.3",
+    "ts-jest": "^26.5.6",
     "typescript": "^4.2.4"
   },
   "dependencies": {
