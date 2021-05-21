@@ -90,4 +90,24 @@ describe('buffy-API routes', () => {
         groupAffiliation: 'Scooby Gang'
       }));
   });
+
+  it('edits a character', () => {
+    return request(app)
+      .put('/api/v1/characters/2')
+      .send({
+        name: 'Alexander Harris',
+        image: 'https://static.wikia.nocookie.net/buffy/images/6/6a/S6_058_Xander.jpg/revision/latest?cb=20190430164507',
+        creature_type: 'human',
+        special_role: 'Watcher',
+        group_affiliation: 'Scooby Gang'
+      })
+      .then(response => expect(response.body).toEqual({
+        id: '2',
+        name: 'Alexander Harris',
+        image: 'https://static.wikia.nocookie.net/buffy/images/6/6a/S6_058_Xander.jpg/revision/latest?cb=20190430164507',
+        creatureType: 'human',
+        specialRole: 'Watcher',
+        groupAffiliation: 'Scooby Gang'
+      }));
+  });
 });
