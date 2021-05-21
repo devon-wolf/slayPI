@@ -51,4 +51,9 @@ module.exports = class Character {
 
 		return rows.map((row : CharRow) => new Character(row));
 	}
+
+	static async getByID(id : string) {
+		const { rows } = await pool.query('SELECT * FROM characters where id=$1', [id]);
+		return new Character(rows[0]);
+	}
 }

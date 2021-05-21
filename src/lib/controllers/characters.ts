@@ -18,3 +18,10 @@ module.exports = Router ()
 			.then((characters : [CharClass]) => res.send(characters))
 			.catch(next);
 	})
+
+	.get('/:id', (req : Request, res : Response, next : NextFunction) => {
+		Character
+			.getByID(req.params.id)
+			.then((character : CharClass) => res.send(character))
+			.catch(next);
+	})
