@@ -1,9 +1,11 @@
+import { response } from "express";
+
 const cheerio = require('cheerio');
 const request = require('superagent');
 
-const buffyURL : string = 'https://buffy.fandom.com/';
+const buffyURL : string = 'https://buffy.fandom.com';
 
-const scoobyHTML = async () => {
+const scoobyHTML = () => {
 	return request.get(`${buffyURL}/wiki/Category:Scooby_Gang`)
 		.then((response : Response) => response.text)
 		.catch(console.error);
@@ -20,4 +22,21 @@ const getScoobyLinks = async () => {
 	return scoobyLinkArray;
 }
 
-module.exports = { getScoobyLinks }
+const characterHTML = (href : string) => {
+	return request.get(`${buffyURL}${href}`)
+		.then((response : Response) => response.text)
+		.catch(console.error);
+}
+
+const getScoobyData = async (href : string) => {
+	const characterPage = await characterHTML(href);
+	const $ = cheerio.load(characterPage);
+	
+	// const character = {};
+
+	const infoBox = $('.portable-infobox')
+	return infoBox;
+	
+}
+
+module.exports = { getScoobyLinks, getScoobyData }
