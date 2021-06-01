@@ -12,7 +12,6 @@ describe('Scraper functionality', () => {
   it('returns an infobox?', () => {
     return getScoobyData('/wiki/Buffybot_(II)')
       .then(results => {
-        console.log(results);
         expect(results).toBeTruthy();
       });
   });
