@@ -1,8 +1,8 @@
-const { getScoobyLinks, getScoobyData } = require('../src/lib/services/scoobyScraper');
+const { getCategoryLinks, getCharacterData } = require('../src/lib/services/scoobyScraper');
 
 describe('Scraper functionality', () => {
   it('populates an array with links', () => {
-    return getScoobyLinks()
+    return getCategoryLinks('Category:Scooby_Gang')
       .then(results => {
         expect(Array.isArray(results)).toBeTruthy();
         expect(results.length > 0).toBeTruthy();
@@ -10,7 +10,7 @@ describe('Scraper functionality', () => {
   });
 
   it('returns an infobox?', () => {
-    return getScoobyData('/wiki/Buffybot_(II)')
+    return getCharacterData('/wiki/Buffybot_(II)')
       .then(results => {
         expect(results).toBeTruthy();
       });

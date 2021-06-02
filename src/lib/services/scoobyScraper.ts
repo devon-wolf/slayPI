@@ -3,22 +3,22 @@ import * as request from 'superagent';
 
 const buffyURL = 'https://buffy.fandom.com';
 
-const scoobyHTML = () => {
-	return request.get(`${buffyURL}/wiki/Category:Scooby_Gang`)
+const categoryHTML = (categoryPath : string) => {
+	return request.get(`${buffyURL}/wiki/${categoryPath}`)
 		.then(response => response.text)
 		.catch(console.error);
 }
 
-const getScoobyLinks = async () => {
-	const categoryPage = await scoobyHTML();
+const getCategoryLinks = async (categoryPath : string) => {
+	const categoryPage = await categoryHTML(categoryPath);
 	if (categoryPage) {
 		const $ = cheerio.load(categoryPage);
-		const scoobyLinkArray : string[] = [];
+		const categoryLinkArray : string[] = [];
 		$('.category-page__member-link').each((i, el) => {
 			const href = $(el).attr('href');
-			if (href) scoobyLinkArray.push(href);
+			if (href) categoryLinkArray.push(href);
 		});
-		return scoobyLinkArray;
+		return categoryLinkArray;
 	}
 }
 
@@ -28,7 +28,7 @@ const characterHTML = (href : string) => {
 		.catch(console.error);
 }
 
-const getScoobyData = async (href : string) => {
+const getCharacterData = async (href : string) => {
 	const characterPage = await characterHTML(href);
 	if (characterPage) {
 		const $ = cheerio.load(characterPage);
@@ -37,16 +37,16 @@ const getScoobyData = async (href : string) => {
 	}
 }
 
-const getAllScoobyData = async () => {
+const getAllCharacterData = async (categoryPath : string) => {
 	const allInfoBoxes : cheerio.Cheerio[] = [];
-	const scoobyLinkArray = await getScoobyLinks();
-	if (scoobyLinkArray && scoobyLinkArray.length) {
-		scoobyLinkArray.forEach(async link => {
-			const infoBox = await getScoobyData(link);
+	const categoryLinkArray = await getCategoryLinks(categoryPath);
+	if (categoryLinkArray && categoryLinkArray.length) {
+		categoryLinkArray.forEach(async href => {
+			const infoBox = await getCharacterData(href);
 			if (infoBox) allInfoBoxes.push(infoBox);
 		});
 		return allInfoBoxes;
 	}
 }
 
-module.exports = { getScoobyLinks, getScoobyData, getAllScoobyData }
+module.exports = { getCategoryLinks, getCharacterData, getAllCharacterData };
