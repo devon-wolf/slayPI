@@ -1,36 +1,38 @@
 import * as cheerio from 'cheerio';
 import * as request from 'superagent';
-import { CharInfoBox } from '../../types';
 
 const buffyURL = 'https://buffy.fandom.com';
 
-const scrapeAllCharactersInCategory = (categoryPath : string) => {
-	return scrapeCharacterLinks(categoryPath)
-		.then(links =>
-				Promise.all(links.map(
-				link =>
-					scrapeCharacterData(link)
-		)))
-		.catch(console.error);
+const scrapeAllCharactersInCategory = async (categoryPath : string) => {
+	const characterLinks = await scrapeCharacterLinks(categoryPath);
+
+	const characterArray = await Promise.all(characterLinks.map(async link => {
+		const characterData = await scrapeCharacterData(link);
+		return characterData;
+	}));
+
+	return characterArray;
 }
 
 const scrapeCharacterLinks = async (categoryPath : string) => {
-	const { text } = await request.get(`${buffyURL}/wiki/${categoryPath}`).retry(3);
+	const { text } = await request.get(`${buffyURL}/wiki/${categoryPath}`);
 
 	const $ = cheerio.load(text);
 
 	const characterLinks : string[] = [];
+	
 	$('.category-page__member-link').each(
 		(i, el) => {
-		const href = $(el).attr('href');
-		if (href) characterLinks.push(href);
+			if (i > 24) return;
+			const href = $(el).attr('href');
+			if (href) characterLinks.push(href);
 	});
 
 	return characterLinks;
 }
 
 const scrapeCharacterData = async (href : string) => {
-	const { text } = await request.get(`${buffyURL}${href}`).retry(3);
+	const { text } = await request.get(`${buffyURL}${href}`);
 
 	const $ = (targetProperty : string) =>
 		cheerio.load(text)('.portable-infobox').find(targetProperty);
@@ -51,4 +53,8 @@ const scrapeCharacterData = async (href : string) => {
 	}
 }
 
-module.exports = { scrapeAllCharactersInCategory };
+module.exports = {
+	scrapeAllCharactersInCategory,
+	scrapeCharacterLinks,
+	scrapeCharacterData
+};

@@ -74,7 +74,6 @@ const getAllCharacterData = async (categoryPath : string) => {
 		});
 		return allCharacterData;
 	}
-	else console.log('Failed at categoy link array');
 }
 
 module.exports = { getCategoryLinks, getCharacterData, getAllCharacterData };
