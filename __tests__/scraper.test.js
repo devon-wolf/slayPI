@@ -2,7 +2,7 @@ const { scrapeAllCharactersInCategory } = require('../src/lib/services/character
 
 jest.setTimeout(120000);
 
-describe('Scraper functionality', () => {
+describe.skip('Scraper functionality', () => {
   it('returns an array of character objects', () => {
     return scrapeAllCharactersInCategory('Category:Resurrected_individuals')
       .then(results => {

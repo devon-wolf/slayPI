@@ -47,4 +47,4 @@ export type ScrapedCharacter = Promise<{
     firstAppearance: string;
     lastAppearance: string;
     actor: string;
-}[]>
+}>

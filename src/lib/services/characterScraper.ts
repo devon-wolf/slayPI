@@ -3,15 +3,8 @@ import * as request from 'superagent';
 
 const buffyURL = 'https://buffy.fandom.com';
 
-const scrapeAllCharactersInCategory = async (categoryPath : string) => {
-	const characterLinks = await scrapeCharacterLinks(categoryPath);
+const splitList = (list : string) => {
 
-	const characterArray = await Promise.all(characterLinks.map(async link => {
-		const characterData = await scrapeCharacterData(link);
-		return characterData;
-	}));
-
-	return characterArray;
 }
 
 const scrapeCharacterLinks = async (categoryPath : string) => {
@@ -53,8 +46,17 @@ const scrapeCharacterData = async (href : string) => {
 	}
 }
 
+const scrapeAllCharactersInCategory = async (categoryPath : string) => {
+	const characterLinks = await scrapeCharacterLinks(categoryPath);
+
+	const characterArray = await Promise.all(characterLinks.map(async link => {
+		const characterData = await scrapeCharacterData(link);
+		return characterData;
+	}));
+
+	return characterArray;
+}
+
 module.exports = {
-	scrapeAllCharactersInCategory,
-	scrapeCharacterLinks,
-	scrapeCharacterData
+	scrapeAllCharactersInCategory
 };
