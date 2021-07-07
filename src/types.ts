@@ -33,3 +33,18 @@ export type CharInfoBox = {
 	lastAppearance : string,
 	actor : string
 }
+
+export type ScrapedCharacter = Promise<{
+    image: string;
+    name: string;
+    aliases: string[];
+    born: string;
+    died: string;
+    status: string;
+    classification: string[];
+    affiliation: string[];
+    knownRelatives: string[];
+    firstAppearance: string;
+    lastAppearance: string;
+    actor: string;
+}[]>

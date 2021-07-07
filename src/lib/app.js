@@ -7,6 +7,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/v1/characters', require('./controllers/characters'));
+app.use('/api/v1/scrapedCharacters', require('./controllers/scrapedCharacters'));
 
 app.use(require('./middleware/not-found'));
 app.use(require('./middleware/error'));
